@@ -115,7 +115,7 @@ sap.ui.define([
                             "title": title,
                             "subtitle": subtitle,
                             "description": description,
-                            "publish_date": "2000-10-10",
+                            "publish_date": publishDate,
                             "source": "Internal DB",
                             "image": image,
                             "editors_ID": editors_ID
