@@ -1,0 +1,65 @@
+<mvc:View controllerName="sap.lib.create.createbooks.controller.CreateBook"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <content>
+            <form:SimpleForm
+                id="createForm"
+                width="auto" class="sapUiResponsiveMargin"
+                title="Book Details"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+                adjustLabelSpan="false"
+                labelSpanL="3"
+                emptySpanL="4"
+                columnsL="1">
+                <form:content>
+                    <Label text="Title" labelFor="bookTitle"></Label>
+                    <Input
+                        id="bookTitle"
+                        required="true"
+                        placeholder="Harry Potter"></Input>
+                    <Label text="Subtitle"></Label>
+                    <Input
+                        id="bookSubtitle"
+                        placeholder="and the Philosopher's Stone"></Input>
+                    <Label text="Author(s)"></Label>
+                    <Input
+                        id="bookAuthors"
+                        required="true"
+                        placeholder="J.K. Rowling; Michael Jackson"></Input>
+                    <Label text="Editor(s)"></Label>
+                    <Input
+                        id="bookEditors"
+                        placeholder="Panini"></Input>
+                    <Label text="Categories"></Label>
+                    <Input
+                        id="bookCategories"
+                        placeholder="Fantasy; Fiction"></Input>
+                    <Label text="Publication Date"></Label>
+                    <DatePicker
+                        id="bookPublishDate"
+                        placeholder="Enter Date"/>
+                    <Label text="Cover - URL"></Label>
+                    <Input
+                        id="bookImage"
+                        placeholder="https://potterhead.com/harry.jpeg"></Input>
+                    <Label text="Description"></Label>
+                    <TextArea
+                        id="bookDescription"
+                        placeholder="Harry Potter lives with his abusive aunt and uncle, Vernon and Petunia Dursley and..."></TextArea>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Create" icon="sap-icon://upload" press="onCreatePress"/>
+			</OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

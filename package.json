@@ -7,15 +7,17 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^6",
-    "express": "^4",
-    "axios": "^1.1.3"
+    "axios": "^1.1.3",
+    "express": "^4"
   },
   "devDependencies": {
+    "@sap/ux-specification": "^1.102.11",
     "cds-launchpad-plugin": "^1.0.7",
     "sqlite3": "^5.0.4"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "watch-create-books": "cds watch --open create-books/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -46,6 +48,7 @@
     }
   },
   "sapux": [
-    "app/read-books"
+    "app/read-books",
+    "app/create-books"
   ]
 }

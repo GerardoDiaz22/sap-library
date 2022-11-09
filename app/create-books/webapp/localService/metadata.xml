@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml">
+        <edmx:Include Alias="HTML5" Namespace="com.sap.vocabularies.HTML5.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="LibService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Books" EntityType="LibService.Books">
+                    <NavigationPropertyBinding Path="authors" Target="BooksAuthors"/>
+                    <NavigationPropertyBinding Path="categories" Target="BooksCategories"/>
+                    <NavigationPropertyBinding Path="editors" Target="Editors"/>
+                    <NavigationPropertyBinding Path="texts" Target="Books_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Books_texts"/>
+                </EntitySet>
+                <EntitySet Name="Authors" EntityType="LibService.Authors">
+                    <NavigationPropertyBinding Path="books" Target="BooksAuthors"/>
+                </EntitySet>
+                <EntitySet Name="Categories" EntityType="LibService.Categories">
+                    <NavigationPropertyBinding Path="books" Target="BooksCategories"/>
+                    <NavigationPropertyBinding Path="texts" Target="Categories_texts"/>
+                    <NavigationPropertyBinding Path="localized" Target="Categories_texts"/>
+                </EntitySet>
+                <EntitySet Name="Editors" EntityType="LibService.Editors">
+                    <NavigationPropertyBinding Path="book" Target="Books"/>
+                </EntitySet>
+                <EntitySet Name="BooksAuthors" EntityType="LibService.BooksAuthors">
+                    <NavigationPropertyBinding Path="book" Target="Books"/>
+                    <NavigationPropertyBinding Path="author" Target="Authors"/>
+                </EntitySet>
+                <EntitySet Name="BooksCategories" EntityType="LibService.BooksCategories">
+                    <NavigationPropertyBinding Path="book" Target="Books"/>
+                    <NavigationPropertyBinding Path="category" Target="Categories"/>
+                </EntitySet>
+                <EntitySet Name="Books_texts" EntityType="LibService.Books_texts"/>
+                <EntitySet Name="Categories_texts" EntityType="LibService.Categories_texts"/>
+            </EntityContainer>
+            <EntityType Name="Books">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="title" Type="Edm.String"/>
+                <Property Name="subtitle" Type="Edm.String"/>
+                <NavigationProperty Name="authors" Type="Collection(LibService.BooksAuthors)" Partner="book">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="categories" Type="Collection(LibService.BooksCategories)" Partner="book">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="editors" Type="LibService.Editors" Partner="book">
+                    <ReferentialConstraint Property="editors_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="editors_ID" Type="Edm.Guid"/>
+                <Property Name="publish_date" Type="Edm.String"/>
+                <Property Name="description" Type="Edm.String"/>
+                <Property Name="image" Type="Edm.String"/>
+                <Property Name="source" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Type="Collection(LibService.Books_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="LibService.Books_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Authors">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="books" Type="Collection(LibService.BooksAuthors)" Partner="author"/>
+            </EntityType>
+            <EntityType Name="Categories">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="books" Type="Collection(LibService.BooksCategories)" Partner="category"/>
+                <NavigationProperty Name="texts" Type="Collection(LibService.Categories_texts)">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="localized" Type="LibService.Categories_texts">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Editors">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="book" Type="Collection(LibService.Books)" Partner="editors"/>
+            </EntityType>
+            <EntityType Name="BooksAuthors">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="book" Type="LibService.Books" Partner="authors">
+                    <ReferentialConstraint Property="book_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="book_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="author" Type="LibService.Authors" Partner="books">
+                    <ReferentialConstraint Property="author_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="author_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="BooksCategories">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <NavigationProperty Name="book" Type="LibService.Books" Partner="categories">
+                    <ReferentialConstraint Property="book_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="book_ID" Type="Edm.Guid"/>
+                <NavigationProperty Name="category" Type="LibService.Categories" Partner="books">
+                    <ReferentialConstraint Property="category_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="category_ID" Type="Edm.Guid"/>
+            </EntityType>
+            <EntityType Name="Books_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="title" Type="Edm.String"/>
+                <Property Name="subtitle" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Categories_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+            </EntityType>
+            <Annotations Target="LibService.Books">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Book"/>
+                        <PropertyValue Property="TypeNamePlural" String="Books"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="title"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="subtitle"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="ImageUrl" Path="image"/>
+                        <PropertyValue Property="TypeImageUrl" String="sap-icon://course-book"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String=""/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Header"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>publish_date</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="title"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                            <Annotation Term="HTML5.CssDefaults">
+                                <Record Type="HTML5.CssDefaultsType">
+                                    <PropertyValue Property="width" String="30%"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="subtitle"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="authors/author/name"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="editors/name"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="categories/category/name"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="publish_date"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="description"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Low"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="image"/>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="aboutBook"/>
+                            <PropertyValue Property="Label" String="About"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#About"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="bibBook"/>
+                            <PropertyValue Property="Label" String="Bibliography"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Bib"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Header">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Author(s)"/>
+                                    <PropertyValue Property="Value" Path="authors/author/name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Editor(s)"/>
+                                    <PropertyValue Property="Value" Path="editors/name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Publication Date"/>
+                                    <PropertyValue Property="Value" Path="publish_date"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="ID"/>
+                                    <PropertyValue Property="Value" Path="ID"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="About">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="description"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="categories/category/name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Bib">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="source"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="createdAt"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="modifiedAt"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="LibService.Books/ID">
+                <Annotation Term="Common.Label" String="ID"/>
+            </Annotations>
+            <Annotations Target="LibService.Books/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="LibService.Books/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="LibService.Books/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="LibService.Books/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/title">
+                                        <Annotation Term="Common.Label" String="Title"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/subtitle">
+                                        <Annotation Term="Common.Label" String="Subtitle"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/editors">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="Editors"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/editors_ID">
+                                        <Annotation Term="UI.Hidden" Bool="true"/>
+                                        <Annotation Term="Common.Text" Path="editors/name">
+                                            <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                                        </Annotation>
+                                        <Annotation Term="Common.Label" String="Editors"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/publish_date">
+                                        <Annotation Term="Common.Label" String="Publication Date"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/description">
+                                        <Annotation Term="UI.MultiLineText" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="Description"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/image">
+                                        <Annotation Term="UI.IsImageURL" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="Cover"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books/source">
+                                        <Annotation Term="Common.Label" String="Source"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Authors/name">
+                                        <Annotation Term="Common.Label" String="Author(s)"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Categories/name">
+                                        <Annotation Term="Common.Label" String="Categories"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Editors/name">
+                                        <Annotation Term="Common.Label" String="Editor(s)"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.BooksAuthors/book">
+                                        <Annotation Term="Common.Label" String="Books"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.BooksAuthors/book_ID">
+                                        <Annotation Term="Common.Text" Path="author/name">
+                                            <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                                        </Annotation>
+                                        <Annotation Term="Common.Label" String="Books"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.BooksAuthors/author">
+                                        <Annotation Term="Common.Label" String="Authors"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.BooksAuthors/author_ID">
+                                        <Annotation Term="Common.Text" Path="author/name">
+                                            <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                                        </Annotation>
+                                        <Annotation Term="Common.Label" String="Authors"/>
+                                    </Annotations>
+                                    <Annotations Target="LibService.Books_texts/locale">
+                                        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                        </Annotations>
+                                        <Annotations Target="LibService.Categories_texts/locale">
+                                            <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+                                            </Annotations>
+                                        </Schema>
+                                    </edmx:DataServices>
+                                </edmx:Edmx>
