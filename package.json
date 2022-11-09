@@ -50,5 +50,15 @@
   "sapux": [
     "app/read-books",
     "app/create-books"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "db/library.db"
+        }
+      }
+    }
+  }
 }
