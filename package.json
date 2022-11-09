@@ -19,7 +19,8 @@
     "start": "cds run",
     "watch-create-books": "cds watch --open create-books/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-update-books": "cds watch --open update-books/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-read-books": "cds watch --open read-books/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-read-books": "cds watch --open read-books/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-delete-books": "cds watch --open delete-books/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
@@ -52,7 +53,8 @@
   "sapux": [
     "app/read-books",
     "app/create-books",
-    "app/update-books"
+    "app/update-books",
+    "app/delete-books"
   ],
   "cds": {
     "requires": {

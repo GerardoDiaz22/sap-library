@@ -1,0 +1,36 @@
+<mvc:View controllerName="sap.lib.delete.deletebooks.controller.DeleteBook"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page showHeader="false">
+        <content>
+            <form:SimpleForm
+                id="deleteForm"
+                title="Delete Book"
+                width="auto" class="sapUiResponsiveMargin"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                singleContainerFullSize="false"
+                adjustLabelSpan="false"
+                labelSpanL="4"
+                emptySpanL="4"
+                columnsL="1">
+                <form:content>
+                    <Label text="Book ID" labelFor="bookID"></Label>
+                    <Input
+                        id="bookID"
+                        required="true"
+                        placeholder="20466922-7d57-4e76-b14c-e53fd97dcb11"></Input>
+                </form:content>
+            </form:SimpleForm>
+        </content>
+        <footer>
+            <OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Delete" type="Reject" icon="sap-icon://delete" press="onDeletePress"/>
+			</OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
