@@ -19,6 +19,10 @@ entity Books : cuid, managed {
     description  : String;
     image        : String;
     source       : String;
+    /* Hidden */
+    authors_field    : String;
+    editors_field    : String;
+    categories_field : String;
 }
 
 /* Many-to-many */

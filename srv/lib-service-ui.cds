@@ -11,6 +11,12 @@ annotate LibService.Books with {
     ID              @title: 'ID';
 }
 
+annotate LibService.Books with {
+    authors_field       @title: 'Author(s)';
+    editors_field       @title: 'Editor(s)';
+    categories_field    @title: 'Categories';
+}
+
 annotate LibService.Editors with {
     name           @title: 'Editor(s)';
 }
@@ -41,9 +47,9 @@ annotate LibService.Books with @(
             },
         ],
         SelectionFields : [
-            // authors.author.name,     // TODO: Tengo que implementarlo con un controllador
-            // editors.name,            // TODO: Tengo que implementarlo con un controllador
-            publish_date
+            authors_field,
+            editors_field,
+            categories_field
         ],
         LineItem : [
             {
@@ -77,6 +83,18 @@ annotate LibService.Books with @(
             {
                 Value : image,
                 @UI.Importance : #High
+            },
+            {
+                Value : authors_field,
+                ![@UI.Hidden]
+            },
+            {
+                Value : editors_field,
+                ![@UI.Hidden]
+            },
+            {
+                Value : categories_field,
+                ![@UI.Hidden]
             }
         ],
         Facets: [
@@ -157,7 +175,6 @@ annotate LibService.Books with {
 	);
     description @UI.MultiLineText: true;
 }
-
 
 annotate LibService.BooksAuthors with {
     author @(
