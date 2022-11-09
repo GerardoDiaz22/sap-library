@@ -52,6 +52,36 @@ module.exports = cds.service.impl(async function() {
                         if (!myRegex.test(book.editors.name))
                             return false;
                     }
+                    if(filterQueries.description){
+                        myRegex = new RegExp(filterQueries.description, "i");
+                        if (!myRegex.test(book.description))
+                            return false;
+                    }
+                    if(filterQueries.publish_date){
+                        myRegex = new RegExp(filterQueries.publish_date, "i");
+                        if (!myRegex.test(book.publish_date))
+                            return false;
+                    }
+                    /*if(filterQueries.title){
+                        myRegex = new RegExp(filterQueries.title, "i");
+                        if (!myRegex.test(book.title))
+                            return false;
+                    }
+                    if(filterQueries.subtitle){
+                        myRegex = new RegExp(filterQueries.subtitle, "i");
+                        if (!myRegex.test(book.subtitle))
+                            return false;
+                    }
+                    if(filterQueries.source){
+                        myRegex = new RegExp(filterQueries.source, "i");
+                        if (!myRegex.test(book.source))
+                            return false;
+                    }
+                    if(filterQueries.ID){
+                        myRegex = new RegExp(filterQueries.ID, "i");
+                        if (!myRegex.test(book.ID))
+                            return false;
+                    }*/
                     if(filterQueries.categories_field){
                         isValid = false;
                         myRegex = new RegExp(filterQueries.categories_field, "i");
@@ -74,7 +104,13 @@ module.exports = cds.service.impl(async function() {
                     let googleQuery = '';
                     if ($search){
                         googleQuery += `intitle:${$search}`;
+                    }/*
+                    if (filterQueries.title){
+                        googleQuery += `intitle:${filterQueries.title}`;
                     }
+                    if (filterQueries.subtitle){
+                        googleQuery += `intitle:${filterQueries.subtitle}`;
+                    }*/
                     if (filterQueries.authors_field){
                         googleQuery += `inauthor:${filterQueries.authors_field}`;
                     }
@@ -86,6 +122,9 @@ module.exports = cds.service.impl(async function() {
                     }
                     if (filterQueries.description){
                         googleQuery += `indescription:${filterQueries.description}`;
+                    }
+                    if (filterQueries.publish_date){
+                        googleQuery += `${filterQueries.publish_date}`;
                     }
                     const googleRes = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${googleQuery}?&maxResults=40`);
                     if (googleRes.data.items == undefined){
@@ -178,7 +217,6 @@ module.exports = cds.service.impl(async function() {
                             const entryBook = { title, subtitle, description, publish_date, image, source, editors_ID };
                             await cds.create( Books, entryBook );
                             const book_ID = await cds.read( Books, { title } ).then( data => data.ID );
-                            console.log(book_ID);
                             
                             /* BooksAuthors */
                             authors_ID.forEach( async author_ID => {
@@ -213,6 +251,36 @@ module.exports = cds.service.impl(async function() {
                                             if (!myRegex.test(book.editors.name))
                                                 return false;
                                         }
+                                        if(filterQueries.description){
+                                            myRegex = new RegExp(filterQueries.description, "i");
+                                            if (!myRegex.test(book.description))
+                                                return false;
+                                        }
+                                        if(filterQueries.publish_date){
+                                            myRegex = new RegExp(filterQueries.publish_date, "i");
+                                            if (!myRegex.test(book.publish_date))
+                                                return false;
+                                        }
+                                        /*if(filterQueries.title){
+                                            myRegex = new RegExp(filterQueries.title, "i");
+                                            if (!myRegex.test(book.title))
+                                                return false;
+                                        }
+                                        if(filterQueries.subtitle){
+                                            myRegex = new RegExp(filterQueries.subtitle, "i");
+                                            if (!myRegex.test(book.subtitle))
+                                                return false;
+                                        }
+                                        if(filterQueries.source){
+                                            myRegex = new RegExp(filterQueries.source, "i");
+                                            if (!myRegex.test(book.source))
+                                                return false;
+                                        }
+                                        if(filterQueries.ID){
+                                            myRegex = new RegExp(filterQueries.ID, "i");
+                                            if (!myRegex.test(book.ID))
+                                                return false;
+                                        }*/
                                         if(filterQueries.categories_field){
                                             isValid = false;
                                             myRegex = new RegExp(filterQueries.categories_field, "i");

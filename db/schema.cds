@@ -47,7 +47,6 @@ entity Categories : cuid {
     books       : Association to many BooksCategories on books.category = $self;
 }
 
-
 /* One-to-Many */
 entity Editors : cuid {
     name        : String;
