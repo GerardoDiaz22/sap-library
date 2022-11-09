@@ -4,6 +4,7 @@ const axios = require('axios');
 const { Books, Editors, Authors, Categories, BooksAuthors, BooksCategories } = cds.entities('sap.lib.books');
 
 module.exports = cds.service.impl(async function() {
+    /* Books */
     this.on('READ', 'Books', async (req, next) => {
         const dbRes = await cds.run(req.query);
 
@@ -129,7 +130,7 @@ module.exports = cds.service.impl(async function() {
     /* Authors */
     this.on('CREATE', 'Authors', async (req, next) => {
         const { name } = req.data;
-        const authRes = await cds.read( Authors, { name } )
+        const authRes = await cds.read( Authors, { name } );
         if (authRes){
             return req.reply(authRes);
         }
@@ -144,5 +145,23 @@ module.exports = cds.service.impl(async function() {
             return req.reply(catRes);
         }
         return next();
+    });
+
+    /* Books Authors*/
+    this.on('DELETE', 'BooksAuthors', async (req, next) => {
+        const book_ID = req.params[0];
+        const bookAuthRes = await SELECT.from( BooksAuthors ).where({ book_ID })
+        bookAuthRes.forEach( async entry => {
+            await cds.delete(BooksAuthors, entry.ID);
+        });
+    });
+
+    /* Books Categories */
+    this.on('DELETE', 'BooksCategories', async (req, next) => {
+        const book_ID = req.params[0];
+        const bookCatRes = await SELECT.from( BooksCategories ).where({ book_ID })
+        bookCatRes.forEach( async entry => {
+            await cds.delete(BooksCategories, entry.ID);
+        });
     });
 });
