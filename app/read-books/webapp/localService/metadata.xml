@@ -6,9 +6,6 @@
     <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
         <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
     </edmx:Reference>
-    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/HTML5.xml">
-        <edmx:Include Alias="HTML5" Namespace="com.sap.vocabularies.HTML5.v1"/>
-    </edmx:Reference>
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
     </edmx:Reference>
@@ -169,6 +166,7 @@
                             </Record>
                         </PropertyValue>
                         <PropertyValue Property="ImageUrl" Path="image"/>
+                        <PropertyValue Property="TypeImageUrl" String="sap-icon://course-book"/>
                     </Record>
                 </Annotation>
                 <Annotation Term="UI.HeaderFacets">
@@ -200,30 +198,15 @@
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="editors/name"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                            <Annotation Term="HTML5.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="15em"/>
-                                </Record>
-                            </Annotation>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="categories/category/name"/>
                             <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                            <Annotation Term="HTML5.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="15em"/>
-                                </Record>
-                            </Annotation>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="publish_date"/>
-                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/Medium"/>
-                            <Annotation Term="HTML5.CssDefaults">
-                                <Record Type="HTML5.CssDefaultsType">
-                                    <PropertyValue Property="width" String="7.5em"/>
-                                </Record>
-                            </Annotation>
+                            <Annotation Term="UI.Importance" EnumMember="UI.ImportanceType/High"/>
                         </Record>
                         <Record Type="UI.DataField">
                             <PropertyValue Property="Value" Path="description"/>
@@ -244,7 +227,7 @@
                         </Record>
                         <Record Type="UI.ReferenceFacet">
                             <PropertyValue Property="ID" String="bibBook"/>
-                            <PropertyValue Property="Label" String="Bib Info"/>
+                            <PropertyValue Property="Label" String="Bibliography"/>
                             <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Bib"/>
                         </Record>
                     </Collection>
@@ -264,6 +247,10 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Label" String="Publication Date"/>
                                     <PropertyValue Property="Value" Path="publish_date"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="ID"/>
+                                    <PropertyValue Property="Value" Path="ID"/>
                                 </Record>
                             </Collection>
                         </PropertyValue>
@@ -290,10 +277,19 @@
                                 <Record Type="UI.DataField">
                                     <PropertyValue Property="Value" Path="source"/>
                                 </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="createdAt"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="modifiedAt"/>
+                                </Record>
                             </Collection>
                         </PropertyValue>
                     </Record>
                 </Annotation>
+            </Annotations>
+            <Annotations Target="LibService.Books/ID">
+                <Annotation Term="Common.Label" String="ID"/>
             </Annotations>
             <Annotations Target="LibService.Books/createdAt">
                 <Annotation Term="UI.HiddenFilter" Bool="true"/>
@@ -340,6 +336,7 @@
                                         <Annotation Term="Common.Label" String="Publication Date"/>
                                     </Annotations>
                                     <Annotations Target="LibService.Books/description">
+                                        <Annotation Term="UI.MultiLineText" Bool="true"/>
                                         <Annotation Term="Common.Label" String="Description"/>
                                     </Annotations>
                                     <Annotations Target="LibService.Books/image">

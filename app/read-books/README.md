@@ -1,11 +1,11 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Mon Nov 07 2022 10:10:31 GMT-0400 (hora de Venezuela)|
+|**Generation Date and Time**<br>Wed Nov 09 2022 00:49:36 GMT-0400 (hora de Venezuela)|
 |**App Generator**<br>@sap/generator-fiori-elements|
 |**App Generator Version**<br>1.7.6|
 |**Generation Platform**<br>Visual Studio Code|
-|**Floorplan Used**<br>Worklist V4|
+|**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>http://localhost:4004/service/books/
 |**Module Name**<br>read-books|

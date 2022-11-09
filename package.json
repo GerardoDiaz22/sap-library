@@ -18,8 +18,8 @@
   "scripts": {
     "start": "cds run",
     "watch-create-books": "cds watch --open create-books/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-update-book": "cds watch --open update-book/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-update-books": "cds watch --open update-books/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-update-books": "cds watch --open update-books/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-read-books": "cds watch --open read-books/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "engines": {
     "node": "^16.15"
