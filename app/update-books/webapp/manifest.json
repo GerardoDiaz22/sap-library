@@ -37,7 +37,7 @@
           "action": "update",
           "title": "Update Books",
           "info": "SAP freestyle",
-          "subTitle": "PUT to SQLite DB",
+          "subTitle": "PATCH to SQLite DB",
           "icon": "sap-icon://refresh"
         }
       }
