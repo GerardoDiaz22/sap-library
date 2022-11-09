@@ -43,6 +43,7 @@
                     <Label text="Publication Date"></Label>
                     <DatePicker
                         id="bookPublishDate"
+                        valueFormat="yyyy-MM-dd"
                         placeholder="Enter Date"/>
                     <Label text="Cover - URL"></Label>
                     <Input
