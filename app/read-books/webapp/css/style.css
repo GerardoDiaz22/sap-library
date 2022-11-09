@@ -1,0 +1,12 @@
+.sapMLIBShowSeparator>td {
+    height: 6em !important;
+}
+
+.sapFAvatarS{
+    width: 5rem !important;
+    height: 6rem !important;
+}
+
+.sapFAvatarXL{
+    height: 10rem !important;
+}
