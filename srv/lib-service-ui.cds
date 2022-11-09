@@ -48,11 +48,7 @@ annotate LibService.Books with @(
         LineItem : [
             {
                 Value : title,
-                @UI.Importance : #High,
-                ![@HTML5.CssDefaults] : {
-                    $Type : 'HTML5.CssDefaultsType',
-                    width : '30%'
-                }
+                @UI.Importance : #High
             },
             {
                 Value : subtitle,
