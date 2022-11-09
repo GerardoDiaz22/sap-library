@@ -44,7 +44,8 @@
                     },
                     "semanticObject": "Books",
                     "action": "read",
-                    "title": "READ Books",
+                    "title": "Read Books",
+                    "info": "SAP Fiori Elements",
                     "subTitle": "GET to SQLite DB",
                     "icon": "sap-icon://course-book"
                 }

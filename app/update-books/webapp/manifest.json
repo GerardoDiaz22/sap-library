@@ -36,9 +36,9 @@
           "semanticObject": "Books",
           "action": "update",
           "title": "Update Books",
-          "info": "Forms for Library API",
+          "info": "SAP freestyle",
           "subTitle": "PUT to SQLite DB",
-          "icon": "sap-icon://add-coursebook"
+          "icon": "sap-icon://refresh"
         }
       }
     }

@@ -36,7 +36,7 @@
           "semanticObject": "Books",
           "action": "create",
           "title": "Create Books",
-          "info": "Forms for Library API",
+          "info": "SAP freestyle",
           "subTitle": "POST to SQLite DB",
           "icon": "sap-icon://add-coursebook"
         }
