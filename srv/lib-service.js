@@ -4,6 +4,17 @@ const axios = require('axios');
 const { Books, Editors, Authors, Categories, BooksAuthors, BooksCategories } = cds.entities('sap.lib.books');
 
 module.exports = cds.service.impl(async function() {
+    /* Utility Functions */
+    /* Remover propiedades where y limit de la query */
+    const cleanQuery = ( query ) => {
+        if (query.SELECT.hasOwnProperty('where') || query.SELECT.hasOwnProperty('limit')){
+            const { where, limit, ...rest } = query.SELECT;
+            return { SELECT : rest };
+        }
+        return query;
+    };
+
+    /* Request Handlers */
     /* Books */
     this.on('READ', 'Books', async (req, next) => {
         
@@ -22,15 +33,7 @@ module.exports = cds.service.impl(async function() {
                 })
             );
 
-            const reqQuery = ( query ) => {
-                if (query.SELECT.hasOwnProperty('where')){
-                    const { where, limit, ...rest } = query.SELECT;
-                    return { SELECT : rest };
-                }
-                return query;
-            };
-
-            const dbRes = await cds.run(reqQuery(req.query));
+            const dbRes = await cds.run(cleanQuery(req.query));
             
             if (Array.isArray(dbRes)){
                 const tableRes = dbRes.filter( book => {
@@ -148,10 +151,10 @@ module.exports = cds.service.impl(async function() {
                             const source = 'Google Books';
                             
                             /* Cover */
-                            const image = ( typeof imageLinks == 'undefined') ? '' : imageLinks.thumbnail;
+                            const image = ( typeof imageLinks == 'undefined') ? null : imageLinks.thumbnail;
                             
                             /* Editors */
-                            editors = ( typeof editors == 'undefined') ? 'unknown' : editors;
+                            editors = ( typeof editors == 'undefined') ? null : editors;
                             const editors_ID = await cds.read( Editors, { name: editors } )
                             .then( async data => {
                                 if (!data){
@@ -215,9 +218,9 @@ module.exports = cds.service.impl(async function() {
             
                             /* Books */
         
-                            subtitle = (typeof subtitle == 'undefined') ? '' : subtitle;
-                            description = (typeof description == 'undefined') ? '' : description;
-                            publish_date = (typeof publish_date == 'undefined') ? '' : publish_date;
+                            subtitle = (typeof subtitle == 'undefined') ? null : subtitle;
+                            description = (typeof description == 'undefined') ? null : description;
+                            publish_date = (typeof publish_date == 'undefined') ? null : publish_date;
         
                             const entryBook = { title, subtitle, description, publish_date, image, source, editors_ID };
                             await cds.create( Books, entryBook );
@@ -235,7 +238,7 @@ module.exports = cds.service.impl(async function() {
                         });
                         return await new Promise( (resolve, reject) => {
                             setTimeout( () => {
-                                resolve(cds.run(reqQuery(req.query))
+                                resolve(cds.run(cleanQuery(req.query))
                                 .then( data => {
                                     return data.filter( book => {
                                         let isValid;
