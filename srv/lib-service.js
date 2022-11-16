@@ -126,7 +126,7 @@ module.exports = cds.service.impl(async function() {
                     if (filterQueries.publish_date){
                         googleQuery += `${filterQueries.publish_date}`;
                     }
-                    const googleRes = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${googleQuery}?&maxResults=40`);
+                    const googleRes = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${googleQuery}?&maxResults=40`);           
                     if (googleRes.data.items == undefined){
                         return [{}];
                     }else{
@@ -138,7 +138,12 @@ module.exports = cds.service.impl(async function() {
                                 publishedDate: publish_date,
                                 ...rest
                             } = book.volumeInfo;
-                            
+
+                            /* Saltar el libro si no tiene titulo*/
+                            if (typeof title == 'undefined'){
+                                return;
+                            }
+
                             /* Source */
                             const source = 'Google Books';
                             
@@ -146,7 +151,7 @@ module.exports = cds.service.impl(async function() {
                             const image = ( typeof imageLinks == 'undefined') ? '' : imageLinks.thumbnail;
                             
                             /* Editors */
-                            editors = ( typeof editors == 'undefined') ? 'Unknown' : editors;
+                            editors = ( typeof editors == 'undefined') ? 'unknown' : editors;
                             const editors_ID = await cds.read( Editors, { name: editors } )
                             .then( async data => {
                                 if (!data){
