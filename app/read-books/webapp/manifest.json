@@ -69,14 +69,14 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": true,
         "dependencies": {
             "minUI5Version": "1.102.1",
             "libs": {
                 "sap.m": {},
                 "sap.ui.core": {},
                 "sap.ushell": {},
-                "sap.fe.templates": {}
+                "sap.fe.templates": {},
+                "sap.f": {}
             }
         },
         "contentDensities": {
@@ -161,7 +161,8 @@
                     }
                 }
             }
-        }
+        },
+        "flexEnabled": true
     },
     "sap.fiori": {
         "registrationIds": [],

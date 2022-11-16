@@ -116,7 +116,8 @@ annotate LibService.Books with @(
                 {
                     $Type : 'UI.DataField',
                     Label : 'Author(s)',
-                    Value : authors.author.name, // BUG: no display de los autores, pero solo en el header, en el content si sirves
+                    Value : authors.author.name,
+                    // BUG: no display de los autores, pero solo en el header, en el content si sirves
                 },
                 {
                     $Type : 'UI.DataField',
